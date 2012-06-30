@@ -3,7 +3,7 @@
 #
 __revision__ = "0"
 #
-# simple httpd to run and develop CGIs
+# simple httpd to run and develop CGIs locally
 
 import CGIHTTPServer
 import BaseHTTPServer
@@ -20,7 +20,7 @@ else:
 IP="127.0.0.1"
 
 httpd = BaseHTTPServer.HTTPServer((IP, PORT), Handler)
-print "Server at: http://%s:%s/cgi/mesh.py" % ( IP, PORT, )
+print "Serving at: http://%s:%s/cgi/mesh.py" % ( IP, PORT, )
 
 httpd.serve_forever()
 
