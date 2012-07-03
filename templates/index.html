@@ -4,6 +4,10 @@ index
 
 <ul>
 $for node in nodes:
-    <li><a href="/node/$node.ID">$node.ID</a></li>
+    <p>
+    <p><a href="/node/$node.ID">$node.unixtime</a></p>
+    <p>$:markdown(node.content)</p>
+    <hr>
+    </p>
 
 </ul>

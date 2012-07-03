@@ -14,8 +14,8 @@ def get_nodes():
     return db.select('nodes', order='unixtime DESC')
 
 def new_node(content):
-    ID          = gen_ID(content)
     unixtime    = int(time.time())
+    ID          = gen_ID(content + str(unixtime))
 
     db.insert('nodes', ID=ID, content=content, unixtime=unixtime)
     return ID
