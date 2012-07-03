@@ -1,0 +1,9 @@
+$def with (nodes)
+
+index
+
+<ul>
+$for node in nodes:
+    <li><a href="/node/$node.ID">$node.ID</a></li>
+
+</ul>
