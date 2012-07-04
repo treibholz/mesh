@@ -1,4 +1,4 @@
-$def with (node)
+$def with (node, form)
 
 $var title: $node.ID
 
@@ -6,4 +6,6 @@ $var title: $node.ID
 
 $:markdown(node.content)
 
-
+<form action="" method="post">
+$:form.render()
+</form>

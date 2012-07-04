@@ -6,10 +6,11 @@ import markdown
 import model
 
 urls = (
-    '/',            'Index',
-    '/new',         'New',
-    '/reply/(.+)',  'Reply',
-    '/node/(.+)',   'Node',
+    '/',                    'Index',
+    '/new',                 'New',
+    '/reply/(.+)',          'Reply',
+    '/node/(.+)',           'Node',
+    '/appreciate/(.+)',     'Appreciate',
 )
 
 t_globals = {
@@ -47,19 +48,28 @@ class New: # {{{
         if not form.validates():
             return render.new(form)
 
-        model.new_node(form.d.content)
+        ID=model.new_node(form.d.content)
 
-        raise web.seeother('/')
+        raise web.seeother('/node/' + ID)
 
 # }}}
 
 class Node: # {{{
 
+    form = web.form.Form(
+        web.form.Button('Reply'),
+        web.form.Button('Appreciate'),
+    )
+
+
     def GET(self, ID):
+        form = self.form()
         node = model.get_node_by_id(ID)
         if not node:
             raise web.seeother('/404')
-        return render.view(node)
+        return render.view(node, form)
+
+
 
 # }}}
 
