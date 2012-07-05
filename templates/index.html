@@ -1,12 +1,15 @@
-$def with (nodes)
+$def with (nodes, form)
 
 index
 
 <ul>
 $for node in nodes:
     <p>
-    <p><a href="/node/$node.ID">$node.unixtime</a></p>
-    <p>$:markdown(node.content)</p>
+    <p><a href="/node/$node.ID">$node.ID</a></p>
+    <p>
+        $:markdown(node.content)
+        <p>$:form.render()</p>
+    </p>
     <hr>
     </p>
 

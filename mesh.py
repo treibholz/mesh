@@ -22,10 +22,17 @@ render = web.template.render('templates', base='base', globals=t_globals)
 
 class Index: # {{{
 
+    form = web.form.Form(
+        web.form.Button('Reply'),
+        web.form.Button('Appreciate'),
+    )
+
+
     def GET(self):
         """ Show page """
+        form  = self.form()
         nodes = model.get_nodes()
-        return render.index(nodes)
+        return render.index(nodes, form)
 
 # }}}
 
@@ -61,7 +68,6 @@ class Node: # {{{
         web.form.Button('Appreciate'),
     )
 
-
     def GET(self, ID):
         form = self.form()
         node = model.get_node_by_id(ID)
@@ -73,7 +79,30 @@ class Node: # {{{
 
 # }}}
 
+class Reply: # {{{
 
+    form = web.form.Form(
+        web.form.Textarea('content', web.form.notnull,
+            rows=5, cols=80,
+            description="Node content:", post="markdown"),
+        web.form.Button('Create Node'),
+    )
+
+    def GET(self, Reference):
+        form = self.form()
+        return render.new(form)
+
+    def POST(self):
+        form = self.form()
+
+        if not form.validates():
+            return render.new(form)
+
+        ID=model.new_node(form.d.content)
+
+        raise web.seeother('/node/' + ID)
+
+# }}}
 
 app = web.application(urls, globals())
 
